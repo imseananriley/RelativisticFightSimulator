@@ -1,7 +1,7 @@
 public class Player {
     private int id;
     private double x, y;
-    private int shotsRemaining = 3;
+    private int shotsRemaining = 30;
     private boolean alive = true;
 
     public Player(int id, double startX, double startY) {

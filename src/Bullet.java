@@ -1,4 +1,7 @@
 public class Bullet {
+    private static int NEXT_BULLET_ID = 0;
+
+    private int bulletId;
     private double startX, startY;
     private double dirX, dirY;
     private double startTime;
@@ -6,13 +9,10 @@ public class Bullet {
 
     private double currentX, currentY;
     private static final double MAX_DISTANCE = 2000.0;
-
-    // NEW: Minimum distance the bullet must travel from origin before collision checking
     private static final double SAFE_DISTANCE = 20.0;
-    // Alternatively, you could store which player fired it, and skip collision with them
-    // for e.g. half a second.
 
     public Bullet(double sx, double sy, double tx, double ty, double startTime) {
+        this.bulletId = NEXT_BULLET_ID++;
         this.startX = sx;
         this.startY = sy;
         this.startTime = startTime;
@@ -30,8 +30,8 @@ public class Bullet {
     }
 
     public void updatePosition(double gameTime, double speedOfLight) {
-        double timeElapsed = gameTime - startTime;
-        double dist = speedOfLight * timeElapsed;
+        double elapsed = gameTime - startTime;
+        double dist = speedOfLight * elapsed;
 
         currentX = startX + dirX * dist;
         currentY = startY + dirY * dist;
@@ -42,25 +42,18 @@ public class Bullet {
         }
     }
 
-    public boolean isActive() { return active; }
-    public double getX() { return currentX; }
-    public double getY() { return currentY; }
-
-    /**
-     * Check if bullet can collide with a given position, ignoring collisions
-     * within SAFE_DISTANCE from origin to avoid self-hits at spawn time.
-     */
     public boolean canCollideWith(double px, double py) {
         double traveled = distance(startX, startY, currentX, currentY);
         if (traveled < SAFE_DISTANCE) {
-            return false; // bullet hasn't gone far enough to collide with anything
+            return false;
         }
-        // You can also skip collision if bullet belongs to a certain player
-        // and px,py is that player's position.
-
-        double dist = distance(currentX, currentY, px, py);
-        return (dist < 15.0); // collision threshold
+        return distance(currentX, currentY, px, py) < 15.0;
     }
+
+    public int    getBulletId() { return bulletId; }
+    public double getX()        { return currentX; }
+    public double getY()        { return currentY; }
+    public boolean isActive()   { return active; }
 
     private double distance(double x1, double y1, double x2, double y2) {
         double dx = x2 - x1;

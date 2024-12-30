@@ -2,8 +2,8 @@ public class Light {
     public double x;
     public double y;
     public double timestamp;
-    public String type;
-    public int id;
+    public String type; // e.g. "P", "BULLET", "SHOT", "EXPLOSION"
+    public int id;      // playerId or bulletId
 
     public Light(String type, int id, double x, double y, double timestamp) {
         this.type = type;

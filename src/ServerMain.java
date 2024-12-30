@@ -52,7 +52,6 @@ public class ServerMain {
             game.updateBullets();
             game.processLightVisibility();
 
-            // Send newly visible or immediate messages
             for (ClientHandler ch : clients) {
                 ch.sendUpdates();
             }

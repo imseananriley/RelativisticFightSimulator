@@ -60,10 +60,8 @@ public class ClientHandler extends Thread {
     }
 
     public void sendUpdates() {
-        // Grab messages for this player
         List<String> lines = game.consumePendingMessages(player.getId());
         for (String msg : lines) {
-            // Could be "LIGHT ..." or "YOU_DEAD"
             out.println(msg);
         }
         out.flush();
