@@ -68,11 +68,22 @@ public class Game {
     public synchronized void movePlayer(int playerId, double dx, double dy) {
         for (Player p : players) {
             if (p.getId() == playerId && p.isAlive()) {
-                p.move(dx, dy);
-                // record a Light event
-                addLightEvent(new Light("P", p.getId(), p.getX(), p.getY(), currentTime));
+                p.accelerate(dx, dy);
                 break;
             }
+        }
+    }
+
+    /**
+     * update location for all players
+     */
+    public synchronized void updateLoc() {
+        for (Player p : players) {
+            double vx = p.getVx();
+            double vy = p.getVy();
+            p.move(vx, vy);
+            // record a Light event
+            addLightEvent(new Light("P", p.getId(), p.getX(), p.getY(), currentTime));
         }
     }
 
