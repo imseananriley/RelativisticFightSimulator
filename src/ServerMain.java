@@ -53,7 +53,6 @@ public class ServerMain {
             game.processLightVisibility();
             game.updateLoc();
 
-            // Send newly visible or immediate messages
             for (ClientHandler ch : clients) {
                 ch.sendUpdates();
             }

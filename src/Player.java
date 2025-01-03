@@ -2,9 +2,8 @@ public class Player {
     private int id;
     private double x, y;
     public double vx, vy;
-    private int shotsRemaining = 3;
+    private int shotsRemaining = 30;
     private boolean alive = true;
-
 
     public Player(int id, double startX, double startY) {
         this.id = id;
